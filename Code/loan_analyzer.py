@@ -144,3 +144,108 @@ present_value = calculate_present_value(future_value, remaining_months, annual_d
 
 # Print out the present value of this new loan.
 print(f"The present value of the loan is: ${present_value: .2f}")
+
+"""
+Part 4: Conditionally Filter Lists of Loans.
+
+For this section, we will determine a set of inexpensive loans from
+a given list of available loans. Our tasks are as follows:
+
+1. Create placeholder list to hold inexpensive loans.
+2. From the complete list of all loans, add loans that cost less than
+   $500 and append them to the list of inexpensive loans. 
+3. Print list of inexpensive loans.
+
+"""
+
+# Header for Part 4.
+print("\n============================================")
+print("Part 4: Conditionally Filter Lists of Loans")
+print("--------------------------------------------\n")
+
+# List of loans. 
+loans = [
+    {
+        "loan_price": 700,
+        "remaining_months": 9,
+        "repayment_interval": "monthly",
+        "future_value": 1000,
+    },
+    {
+        "loan_price": 500,
+        "remaining_months": 13,
+        "repayment_interval": "bullet",
+        "future_value": 1000,
+    },
+    {
+        "loan_price": 200,
+        "remaining_months": 16,
+        "repayment_interval": "bullet",
+        "future_value": 1000,
+    },
+    {
+        "loan_price": 900,
+        "remaining_months": 16,
+        "repayment_interval": "bullet",
+        "future_value": 1000,
+    },
+]
+
+# Create placeholder list to hold inexpensive loans.
+inexpensive_loans = []
+
+# From the complete list of all loans, add loans that cost less than
+# $500 and append them to the list of inexpensive loans. 
+inexpensive_price = 500
+for loan in loans:
+    loan_price = loan["loan_price"]
+    if loan_price <= inexpensive_price:
+        inexpensive_loans.append(loan)
+
+# Print list of inexpensive loans.
+print("Inexpensive loans: ")
+loan_count = 1
+for loan in inexpensive_loans:
+    print(f"\n\tLoan {loan_count}")
+    print("\t\tLoan price = $", loan.get("loan_price"))
+    print("\t\tRemaining Months = ", loan.get("remaining_months"))
+    print("\t\tRepayment Interval = ", loan.get("repayment_interval"))
+    print("\t\tFuture Value = $", loan.get("future_value"))
+    loan_count += 1
+
+"""
+Part 5: Save the Results
+
+In this final section, we will be saving our results from Part 4 into an
+external comma-separated value (.csv) file. We will carry out this task
+through ther utilization of the 'with open' Python syntax.
+
+"""
+
+# Header for Part 5.
+print("\n============================================")
+print("Part 5: Save the Results")
+print("--------------------------------------------\n")
+
+# Set the output header.
+header = ["loan_price", "remaining_months", "repayment_interval", "future_value"]
+
+# Set the output file path.
+output_path = Path("inexpensive_loans.csv")
+
+# Write inexpensive_loans to a new .csv file named 'inexpensive_loans.csv'.
+try:
+    print("Commencing data writing...")
+    with open("inexpensive_loans.csv", "w", newline = '') as f:
+        csvwriter = csv.DictWriter(f, fieldnames = header)
+        csvwriter.writeheader()
+        for loan in inexpensive_loans:
+            csvwriter.writerow(loan)
+    
+    print(".csv file successfully written! \n")
+except:
+    print("Error writing data to .csv file. \n")
+
+# End of Loan Analyzer program.
+print("--------------------------------------------\n")
+print("End of Loan Analyzer program. \n")
